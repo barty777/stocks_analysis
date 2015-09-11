@@ -11,27 +11,29 @@ tickers="WMT;AAPL;TSLA"
 getFinancials(Symbol = tickers, src = webSource , auto.assign = TRUE)
 
 #' Return data from balance sheet
-#' @param company data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.
-#' @return Returns dataFrame type
+#' @param company data from getFinancials functions;
+#' @param period can be 'Q' for quarterly data and 'A' for annual data.
+#' @return Returns dataFrame type with balance sheet data
 getBalanceSheet <- function(company, periodFreq){
-  x<-viewFinancials(company,period=periodFreq,type = "BS")
-  data.frame(x)
+      x<-viewFinancials(company,period=periodFreq,type = "BS")
+      data.frame(x)
 }
 
 #' Return data from Income statement
-#' @param company data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.
-#' @return  Returns dataFrame type
+#' @param company data from getFinancials functions; period can be 'Q' for quarterly data and 'A' for annual data.
+#' @return  Returns dataFrame type with income statement data
 getIncomeStatement <- function(company, periodFreq){
-  x<-viewFinancials(company,period=periodFreq,type = "IS")
-  data.frame(x)
+      x<-viewFinancials(company,period=periodFreq,type = "IS")
+      data.frame(x)
 }
 
 #' Return data from Cash Flow Statement
-#' @param company data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.
+#' @param company data from getFinancials functions;
+#' @param period can be 'Q' for quarterly data and 'A' for annual data.
 #' @return  Returns dataFrame type with cash flow data
 getCashFlow <- function(company,periodFreq){
-  x<-viewFinancials(company,period=periodFreq,type = "CF")
-  data.frame(x)
+      x<-viewFinancials(company,period=periodFreq,type = "CF")
+      data.frame(x)
 }
 
 

@@ -7,10 +7,10 @@
 getIncomeStatement(company, periodFreq)
 }
 \arguments{
-\item{company}{data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.}
+\item{company}{data from getFinancials functions; period can be 'Q' for quarterly data and 'A' for annual data.}
 }
 \value{
-Returns dataFrame type
+Returns dataFrame type with income statement data
 }
 \description{
 Return data from Income statement

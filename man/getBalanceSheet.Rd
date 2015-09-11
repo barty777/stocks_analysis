@@ -7,10 +7,12 @@
 getBalanceSheet(company, periodFreq)
 }
 \arguments{
-\item{company}{data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.}
+\item{company}{data from getFinancials functions;}
+
+\item{period}{can be 'Q' for quarterly data and 'A' for annual data.}
 }
 \value{
-Returns dataFrame type
+Returns dataFrame type with balance sheet data
 }
 \description{
 Return data from balance sheet

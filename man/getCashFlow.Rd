@@ -7,7 +7,9 @@
 getCashFlow(company, periodFreq)
 }
 \arguments{
-\item{company}{data from getFinancials funcitons; period can be 'Q' for quarterly data and 'A' for annual data.}
+\item{company}{data from getFinancials functions;}
+
+\item{period}{can be 'Q' for quarterly data and 'A' for annual data.}
 }
 \value{
 Returns dataFrame type with cash flow data
