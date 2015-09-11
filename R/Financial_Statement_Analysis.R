@@ -2,7 +2,10 @@
 library(quantmod)
 
 #setup Constants
+
+#sources available: google, yahoo, FRED
 webSource = "google"
+#Pick the tickers for analysis
 tickers="WMT;AAPL;TSLA"
 
 # Get Stocks Financials
@@ -36,4 +39,12 @@ getCashFlow <- function(company,periodFreq){
       data.frame(x)
 }
 
+#'Returns dataframe with this columns: Open Price, High Price, Low Price, Close Price, Volume, Adjusted
+#'@param Company: Array of company tickers
+#'@param srce: website source
+#'@return dataframe with historic prices
+getHistoricPrices <- function(company,srce){
+      x=getSymbols(Symbols=company,src=srce, symbol.lookup = TRUE, env = NULL)
+      data.frame(x)
+}
 
