@@ -48,10 +48,7 @@ getCashFlow <- function(company,periodFreq = 'A') {
 #'@param srce: website source
 #'@return dataframe with historic prices
 getHistoricPrices <- function(company,srce = 'google') {
-      x <-
-            getSymbols(
-                  Symbols = company,src = srce, symbol.lookup = TRUE, env = NULL
-            )
+      x <- getSymbols(Symbols = company,src = srce, symbol.lookup = TRUE, env = NULL)
       data.frame(x)
 }
 
@@ -63,11 +60,15 @@ getHistoricPrices <- function(company,srce = 'google') {
 getHistoricDividends <- function(company, timeSpan=1, srce="google") {
       #Date calculation
       yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - timeSpan)
+
       divTemp <- getDividends(Symbol = company, from = paste(yearFrom,"-01-01", sep = ''), src = srce, env=NULL)
       ammount <- double()
+
+      #Extract dividends from .xts table
       for(i in 1:nrow(divTemp)){
             ammount <- c(ammount, coredata(divTemp[i]))
       }
+
       colNames <- c('Date of dividend','Amount in USD')
       data <- data.frame(index(divTemp),ammount)
       colnames(data) <- colNames
