@@ -1,0 +1,12 @@
+---
+title: "Installing quantmod"
+author: "Bartol Freškura"
+date: "September 12, 2015"
+output: html_document
+---
+
+#Installing quantmod package on Arch Linux
+
+*1) Install gcc-fortran package using your package manager (pacman default)
+*2) Install xts package in R using install.packages('xts')
+*3) Install the quantmod package using install.packages('quantmod')
