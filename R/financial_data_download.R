@@ -59,12 +59,17 @@ getHistoricPrices <- function(company,srce = 'google') {
 #' @param company ticker for the company.
 #' @param timeSpan Time interval in years. timeSpan of 2 means that dividends
 #' from last 2 years will be retrieved. Default is 1 year.
-#' @return
-getHistoricDividends <-  function(company, timeSpan=1, srce="google") {
+#' @return Data frame consisting of 2 columns: date of dividend and the ammount in US Dollars.
+getHistoricDividends <- function(company, timeSpan=1, srce="google") {
       #Date calculation
       yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - timeSpan)
-
       divTemp <- getDividends(Symbol = company, from = paste(yearFrom,"-01-01", sep = ''), src = srce, env=NULL)
-
-      colnames(divTemp) <- c('Date of Dividend', 'Dividend Ammount in USD')
+      ammount <- double()
+      for(i in 1:nrow(divTemp)){
+            ammount <- c(ammount, coredata(divTemp[i]))
+      }
+      colNames <- c('Date of dividend','Amount in USD')
+      data <- data.frame(index(divTemp),ammount)
+      colnames(data) <- colNames
+      data
 }
