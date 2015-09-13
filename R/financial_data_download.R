@@ -17,7 +17,8 @@ indexTickerYahoo = c('^GSPC', '^RUA', '^RUT', '^DJI')
 getFinancials(Symbol = tickers, src = webSource , auto.assign = TRUE)
 
 
-
+#' @title  Download and view balance sheet
+#' @description
 #' Return data from balance sheet for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
 #'  'CompanyName.f'. Only ONE company can be in the argument.
@@ -29,6 +30,8 @@ getBalanceSheet <- function(company, periodFreq = 'A') {
       data.frame(x)
 }
 
+#'@title Download and view income statement
+#' @description
 #' Return data from Income statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
 #'  'CompanyName.f'. Only ONE company can be in the argument.
@@ -41,7 +44,8 @@ getIncomeStatement <- function(company, periodFreq = 'A') {
 
 
 
-
+#' @title Download and view cash flow statement
+#' @description
 #' Return data from Cash Flow Statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
 #' 'CompanyName.f'. Only ONE company can be in the argument.
@@ -53,8 +57,8 @@ getCashFlow <- function(company,periodFreq = 'A') {
 }
 
 
-
-# TODO format data so it returns data.frame type
+#'@title Download and view prices from history
+#'@description
 #'Returns dataframe with this columns: Open Price, High Price, Low Price, Close
 #' Price, Volume, Adjusted
 #'@param company: Company ticker
@@ -94,7 +98,8 @@ getHistoricPrices <- function(company,srce = 'yahoo', timeSpan=1) {
 }
 
 
-
+#' @title Download and view dividends
+#' @description
 #' Function returns dividends for the specified company.
 #' @param company ticker for the company.
 #' @param timeSpan Time interval in years. timeSpan of 2 means that dividends
@@ -124,7 +129,8 @@ getHistoricDividends <- function(company, timeSpan=1, srce="yahoo") {
       data
 }
 
-
+#' @title Download and view some basic information
+#' @description
 #' Returns summary information about the company (e.g. Various ratios,  volume...)
 #' Returns only from yahoo.com
 #' Information that is returned: Symbol, Earnings/Share, EPS Estimate Current Year,
