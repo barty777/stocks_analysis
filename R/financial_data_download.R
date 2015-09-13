@@ -18,6 +18,7 @@ getFinancials(Symbol = tickers, src = webSource , auto.assign = TRUE)
 
 
 #' @title  Download and view balance sheet
+#' @author Bartol Freškura
 #' @description
 #' Return data from balance sheet for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
@@ -31,6 +32,7 @@ getBalanceSheet <- function(company, periodFreq = 'A') {
 }
 
 #'@title Download and view income statement
+#'@author Bartol Freškura
 #' @description
 #' Return data from Income statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
@@ -45,6 +47,7 @@ getIncomeStatement <- function(company, periodFreq = 'A') {
 
 
 #' @title Download and view cash flow statement
+#' @author Bartol Freškura
 #' @description
 #' Return data from Cash Flow Statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
@@ -58,6 +61,7 @@ getCashFlow <- function(company,periodFreq = 'A') {
 
 
 #'@title Download and view prices from history
+#'@author Bartol Freškura
 #'@description
 #'Returns dataframe with this columns: Open Price, High Price, Low Price, Close
 #' Price, Volume, Adjusted
@@ -99,6 +103,7 @@ getHistoricPrices <- function(company,srce = 'yahoo', timeSpan=1) {
 
 
 #' @title Download and view dividends
+#' @author Bartol Freškura
 #' @description
 #' Function returns dividends for the specified company.
 #' @param company ticker for the company.
@@ -130,6 +135,7 @@ getHistoricDividends <- function(company, timeSpan=1, srce="yahoo") {
 }
 
 #' @title Download and view some basic information
+#' @author Bartol Freškura
 #' @description
 #' Returns summary information about the company (e.g. Various ratios,  volume...)
 #' Returns only from yahoo.com

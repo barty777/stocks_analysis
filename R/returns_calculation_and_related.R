@@ -1,37 +1,28 @@
 #' @title View returns on daily basis
+#' @author Bartol Freškura
 #' @description Function returns data frame containing returns from past
 #' on the daily basis. Returns are NOT in PERCENTAGES!!!
 #' @param pricesHistoric Data frame with historic prices. Data should be in
 #' form of Date, Open High, Low, Close, Volume
+#' @return data frame containing date and return.
 #'
-getReturns <- function(pricesHistoric, frequency="monthly") {
+getReturns <- function(pricesHistoric) {
       returns <- numeric()
+      #Start from second row because return for first price can't be
+      #calculated
 
-
-      if(frequency=='daily'){
-            #Start from second row because return for first price can't be
-            #calculated
-
-            for(i in 2:(nrow(pricesHistoric)-1)) {
-                  change <- as.numeric(as.character((pricesHistoric$Close[i+1]/pricesHistoric$Close[i]) - 1))
-                  returns <- c(returns, change)
-
-            }
-
-            #Remove first and last dates
-            dates <- pricesHistoric$Date
-            dates <- dates[2:length(dates)]
-            dates <- dates[1:length(dates)-1]
-
-            colNames = c('Date', 'Return')
-            frame <- data.frame(dates,as.numeric(returns))
-            colnames(frame) <- colNames
-
-            return (frame)
-
+      for(i in 2:(nrow(pricesHistoric)-1)) {
+            change <- as.numeric(as.character((pricesHistoric$Close[i+1]/pricesHistoric$Close[i]) - 1))
+            returns <- c(returns, change)
       }
-      else{
+      #Remove first and last dates
+      dates <- pricesHistoric$Date
+      dates <- dates[2:length(dates)]
+      dates <- dates[1:length(dates)-1]
 
-      }
+      colNames = c('Date', 'Return')
+      frame <- data.frame(dates,as.numeric(returns))
+      colnames(frame) <- colNames
 
+      return (frame)
 }
