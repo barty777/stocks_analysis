@@ -12,6 +12,8 @@ tickers = "WMT;AAPL;TSLA"
 # Variables are returned in format of TickerName.f
 getFinancials(Symbol = tickers, src = webSource , auto.assign = TRUE)
 
+
+
 #' Return data from balance sheet
 #' @param company: data from getFinancials functions in the form of 'CompanyName
 #' .f'. Only ONE company can be in the argument.
@@ -32,6 +34,9 @@ getIncomeStatement <- function(company, periodFreq = 'A') {
       data.frame(x)
 }
 
+
+
+
 #' Return data from Cash Flow Statement
 #' @param company: data from getFinancials functions in the form of
 #' 'CompanyName.f'. Only ONE company can be in the argument.
@@ -42,20 +47,53 @@ getCashFlow <- function(company,periodFreq = 'A') {
       data.frame(x)
 }
 
+
+
+# TODO format data so it returns data.frame type
 #'Returns dataframe with this columns: Open Price, High Price, Low Price, Close
 #' Price, Volume, Adjusted
-#'@param company: Array of company tickers
+#'@param company: Company ticker
 #'@param srce: website source
+#'@param timeSpan Time interval in years. timeSpan of 2 means that data
+#' from last 2 years will be retrieved. Default is 1 year.
 #'@return dataframe with historic prices
-getHistoricPrices <- function(company,srce = 'google') {
-      x <- getSymbols(Symbols = company,src = srce, symbol.lookup = TRUE, env = NULL)
-      data.frame(x)
+getHistoricPrices <- function(company,srce = 'google', timeSpan=1) {
+      x <- getSymbols(Symbols = company,src = srce, env = NULL)
+      yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - timeSpan)
+      rawConverted <- coredata(x)
+
+      openPrice <- double()
+      highPrice <- double()
+      lowPrice <- double()
+      closePrice <- double()
+      volume <- double()
+      adjusted <- double()
+
+      #Extract data from .xts table
+      for(i in 1:nrow(rawConverted)){
+            openPrice <- c(openPrice, rawConverted[i,1])
+            highPrice <- c(highPrice, rawConverted[i,2])
+            lowPrice <- c(lowPrice, rawConverted[i,3])
+            closePrice <- c(closePrice, rawConverted[i,4])
+            volume <- c(volume, rawConverted[i,5])
+           # adjusted <- c(adjusted, rawConverted[i,6])
+      }
+      colNames <- c('Date','Open','High', 'Low','Close', 'Volume')
+      data <- data.frame(index(x),openPrice,highPrice,lowPrice,closePrice,volume)
+      colnames(data) <- colNames
+
+      boolVectorDate <- data[,1]>=paste(yearFrom,"-01-01",sep = '')
+      data[boolVectorDate,]
+
 }
+
+
 
 #' Function returns dividends for the specified company.
 #' @param company ticker for the company.
 #' @param timeSpan Time interval in years. timeSpan of 2 means that dividends
 #' from last 2 years will be retrieved. Default is 1 year.
+#' @param srce: website source
 #' @return Data frame consisting of 2 columns: date of dividend and the ammount in US Dollars.
 getHistoricDividends <- function(company, timeSpan=1, srce="google") {
       #Date calculation
