@@ -94,12 +94,15 @@ getHistoricPrices <- function(company,srce = 'google', timeSpan=1) {
 #' @param timeSpan Time interval in years. timeSpan of 2 means that dividends
 #' from last 2 years will be retrieved. Default is 1 year.
 #' @param srce: website source
-#' @return Data frame consisting of 2 columns: date of dividend and the ammount in US Dollars.
+#' @return Data frame consisting of 2 columns: date of dividend and the ammount
+#'  in US Dollars.
 getHistoricDividends <- function(company, timeSpan=1, srce="google") {
       #Date calculation
       yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - timeSpan)
 
-      divTemp <- getDividends(Symbol = company, from = paste(yearFrom,"-01-01", sep = ''), src = srce, env=NULL)
+      divTemp <- getDividends(Symbol = company,
+                              from = paste(yearFrom,"-01-01", sep = ''),
+                              src = srce, env=NULL)
       ammount <- double()
 
       #Extract dividends from .xts table
@@ -111,4 +114,21 @@ getHistoricDividends <- function(company, timeSpan=1, srce="google") {
       data <- data.frame(index(divTemp),ammount)
       colnames(data) <- colNames
       data
+}
+
+
+#' Returns summary information about the company (e.g. Various ratios, volume...)
+#' Returns only from yahoo.com
+#' @param company:
+#' @return
+getSummary <- function(company) {
+      informationVector <- c('Symbol','Earning/Share','EPS Estimate Current Year',
+                             'EPS Estimate Next Quarter','52-week Low',
+                             '200-day Moving Average','Price/Book','P/E Ratio',
+                             'Dividend Yield','Dividend/Share','Price/Sales',
+                             'Shares Owned','Volume','Stock Exchange',
+                             'EPS Estimate Next Year',
+                             '52-Week-High')
+      raw <- getQuote(company, what = yahooQF(informationVector))
+
 }
