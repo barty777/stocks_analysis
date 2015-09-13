@@ -6,7 +6,10 @@ library(quantmod)
 webSource = "google"
 
 #Pick the tickers for analysis
-tickers = "WMT;AAPL;TSLA"
+tickers = "WMT;AAPL;TSLA;"
+
+#Indexes tickers: S&P 500, Russell 3000, Russell 2000, Dow Jones Industrial Average
+indexTickerYahoo = c('^GSPC', '^RUA', '^RUT', '^DJI')
 
 ## Get Stocks Financials
 # Symbol or more valid google symbol, as a character vector or semi-colon
@@ -15,9 +18,9 @@ getFinancials(Symbol = tickers, src = webSource , auto.assign = TRUE)
 
 
 
-#' Return data from balance sheet
-#' @param company: data from getFinancials functions in the form of 'CompanyName
-#' .f'. Only ONE company can be in the argument.
+#' Return data from balance sheet for the last 4 periods (quarterly or annually)
+#' @param company: data from getFinancials functions in the form of
+#'  'CompanyName.f'. Only ONE company can be in the argument.
 #' @param periodFreq: can be 'Q' for quarterly data and 'A' for annual data.
 #' @return Returns dataFrame type with balance sheet data
 #' @usage getBalanceSheet('AAPL',periodFreq='Q'), getBalanceSheet('TSLA',periodFreq='A')
@@ -26,7 +29,7 @@ getBalanceSheet <- function(company, periodFreq = 'A') {
       data.frame(x)
 }
 
-#' Return data from Income statement
+#' Return data from Income statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
 #'  'CompanyName.f'. Only ONE company can be in the argument.
 #' @param  periodFreq: can be 'Q' for quarterly data and 'A' for annual data.
@@ -39,7 +42,7 @@ getIncomeStatement <- function(company, periodFreq = 'A') {
 
 
 
-#' Return data from Cash Flow Statement
+#' Return data from Cash Flow Statement for the last 4 periods (quarterly or annually)
 #' @param company: data from getFinancials functions in the form of
 #' 'CompanyName.f'. Only ONE company can be in the argument.
 #' @param periodFreq: can be 'Q' for quarterly data and 'A' for annual data.
@@ -60,7 +63,7 @@ getCashFlow <- function(company,periodFreq = 'A') {
 #' to integer numbers.
 #' from last 2 years will be retrieved. Default is 1 year.
 #'@return dataframe with historic prices
-getHistoricPrices <- function(company,srce = 'google', timeSpan=1) {
+getHistoricPrices <- function(company,srce = 'yahoo', timeSpan=1) {
       x <- getSymbols(Symbols = company,src = srce, env = NULL)
       yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - round(timeSpan))
       rawConverted <- coredata(x)
@@ -81,7 +84,7 @@ getHistoricPrices <- function(company,srce = 'google', timeSpan=1) {
             volume <- c(volume, rawConverted[i,5])
            # adjusted <- c(adjusted, rawConverted[i,6])
       }
-      colNames <- c(Date,Open,'High', 'Low','Close', 'Volume')
+      colNames <- c('Date', 'Open','High', 'Low','Close', 'Volume')
       data <- data.frame(index(x),openPrice,highPrice,lowPrice,closePrice,volume)
       colnames(data) <- colNames
 
@@ -101,7 +104,7 @@ getHistoricPrices <- function(company,srce = 'google', timeSpan=1) {
 #' @return Data frame consisting of 2 columns: date of dividend and the ammount
 #'  in US Dollars.
 #' @usage getHistoricDividends(company='CBL', timeSpan=4, srce='yahoo')
-getHistoricDividends <- function(company, timeSpan=1, srce="google") {
+getHistoricDividends <- function(company, timeSpan=1, srce="yahoo") {
       #Date calculation
       yearFrom <- toString(as.numeric(c(format(Sys.Date(), "%Y"))) - round(timeSpan))
 
