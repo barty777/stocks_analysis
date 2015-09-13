@@ -119,10 +119,18 @@ getHistoricDividends <- function(company, timeSpan=1, srce="google") {
 
 #' Returns summary information about the company (e.g. Various ratios, volume...)
 #' Returns only from yahoo.com
-#' @param company:
-#' @return
+#' Information that is returned: Symbol','Earnings/Share','EPS Estimate Current Year',
+#' EPS Estimate Next Quarter','52-week Low',
+#''200-day Moving Average','Price/Book','P/E Ratio',
+#''Dividend Yield','Dividend/Share','Price/Sales',
+#''Shares Owned','Volume','Stock Exchange',
+#''EPS Estimate Next Year',
+#''52-Week-High'
+#' @param company ticker for the company.
+#' @return Data frame with specified information
+#' @usage getSummary('AAPL'), getSummary('WMT')
 getSummary <- function(company) {
-      informationVector <- c('Symbol','Earning/Share','EPS Estimate Current Year',
+      informationVector <- c('Symbol','Earnings/Share','EPS Estimate Current Year',
                              'EPS Estimate Next Quarter','52-week Low',
                              '200-day Moving Average','Price/Book','P/E Ratio',
                              'Dividend Yield','Dividend/Share','Price/Sales',
@@ -130,5 +138,6 @@ getSummary <- function(company) {
                              'EPS Estimate Next Year',
                              '52-Week-High')
       raw <- getQuote(company, what = yahooQF(informationVector))
+      data.frame(raw)
 
 }
