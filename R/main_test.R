@@ -16,4 +16,4 @@ indexPrices <- getHistoricPrices(company = indexTickerYahoo[2],timeSpan = 10)
 companyReturns <- getReturns(companyPrices)
 indexReturns <- getReturns(indexPrices)
 
-beta <- getBeta(companyReturns,indexReturns)
+beta <- getBetaMeanVar(companyReturns,indexReturns)
