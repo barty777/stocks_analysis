@@ -26,3 +26,19 @@ getReturns <- function(pricesHistoric) {
 
       return (frame)
 }
+
+
+#' @title Calculate beta
+#' @author Bartol Freškura
+#' @description Calculates beta coefficient for the given company when
+#' compared with given index. Argument data frames MUST have equal number of
+#' entries (rows).
+#' @param companyReturns Data frame containing returns for the company.
+#' @param indexReturns Data frame containing returns for the index.
+#' @return Beta coefficient.
+
+getBeta <- function(companyReturns, indexReturns) {
+      covariance <- cov(companyReturns$Return,indexReturns$Return)
+      varianceInd <- var(indexReturns$Return)
+      covariance/varianceInd
+}
