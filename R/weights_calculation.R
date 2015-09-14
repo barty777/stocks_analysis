@@ -7,12 +7,18 @@
 #' @param increment Increment when determining weights
 #' @return 
 getWeights <- function(increment=0.1, stockNumber=3) {
- 
+      
+      
       #Precaution
-      if(increment<=0.05 || stockNumber >7){
+      if(increment<0.05 || stockNumber>7){
             break;
       }     
-      else{
-            
+      else {
+            increments <- seq(from = 0, to= 1, by=increment)
+            frame <- expand.grid(rep(list(increments),each=stockNumber))
+            frameNew <- data.frame()
+            subset(frame, subset = (rowSums(frame)<=1) & (rowSums(frame)>=0.97))
       }
 }
+
+ 
