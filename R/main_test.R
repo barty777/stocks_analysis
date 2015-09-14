@@ -11,7 +11,7 @@ indexTickerYahoo = c('^GSPC', '^RUA', '^RUT', '^DJI')
 
 
 companyPrices <- getHistoricPrices(company = companies[2],timeSpan = 10)
-indexPrices <- getHistoricPrices(company = indexTickerYahoo[2],timeSpan = 10)
+indexPrices <- getHistoricPrices(company = indexTickerYahoo[1],timeSpan = 10)
 
 companyReturns <- getReturns(companyPrices)
 indexReturns <- getReturns(indexPrices)
