@@ -1,5 +1,6 @@
-## THIS FUNCTION IS OBSOLETE!!!!
+library(R.matlab)
 
+## THIS FUNCTION IS OBSOLETE!!!!
 #' @name Calculate weights for portfolio
 #' @author Bartol Freškura
 #' @description Returns data frame containing all combinations of weights where
@@ -27,6 +28,28 @@ getWeights <- function(increment=0.1, stockNumber=3) {
             frameNew <- data.frame()
             subset(frame, subset = (rowSums(frame)<=1) & (rowSums(frame)>=0.97))
       }
+}
+
+
+
+
+
+#' @name Load weights
+#' @author Bartol Freškura
+#' @description Loads weights from .mat file and converts to data frame type.
+#' .mat files are in format of "Xxxx_y" where X represents number before the
+#' decimal point, and x-es represent the numbers after the decimal point.
+#' y represents lenght of the each row. E.g: 0020_6 means that function
+#' will return a data frame with row lenght of 6 and the increment between
+#' ratios in row of 0.020.
+#' @param name Name of the file
+#' @return data frame with all the weights
+#' @usage loadMatlabWeights("0020_6"), loadMatlabWeights("0040_8")
+loadMatlabWeights <- function(name){
+      pathname <- file.path("/home/bartol/Documents/Work/StockAnalyzer/Matlab", paste(name,".mat", sep = ''))
+      data <- readMat(pathname)
+      data <- do.call(rbind.data.frame, data)
+      data
 }
 
 
