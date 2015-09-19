@@ -42,10 +42,12 @@ getWeights <- function(increment=0.1, stockNumber=3) {
 #' will return a data frame with row lenght of 6 and the increment between
 #' ratios in row of 0.020.
 #' @param name Name of the file
+#' @param path Path to the folder where .mat files reside. Default folder
+#' is your working directory
 #' @return data frame with all the weights
-#' @usage loadMatlabWeights("0020_6"), loadMatlabWeights("0040_8")
-loadMatlabWeights <- function(name){
-      pathname <- file.path("/home/bartol/Documents/Work/StockAnalyzer/Matlab", paste(name,".mat", sep = ''))
+#' @usage loadMatlabWeights("0020_6","/home/username/Documents/MatFilesFolder/"), loadMatlabWeights("/0040_8")
+loadMatlabWeights <- function(name, folderPath=getwd()){
+      pathname <- file.path(paste(folderPath, name,".mat", sep = ''))
       data <- readMat(pathname)
       data <- do.call(rbind.data.frame, data)
       data
