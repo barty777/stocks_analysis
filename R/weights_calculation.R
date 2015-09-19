@@ -1,3 +1,4 @@
+## THIS FUNCTION IS OBSOLETE!!!!
 
 #' @name Calculate weights for portfolio
 #' @author Bartol Freškura
@@ -22,7 +23,7 @@ getWeights <- function(increment=0.1, stockNumber=3) {
       ##Tested with inc=0.03 and s#= 5.
       else {
             increments <- seq(from = 0, to= 1, by=increment)
-            frame <- expand.grid(rep(list(increments),each=stockNumber))
+            frame <- expand.grid(rep(list(increments),each=stockNumber), Var1+Var2+Var3 <=1)
             frameNew <- data.frame()
             subset(frame, subset = (rowSums(frame)<=1) & (rowSums(frame)>=0.97))
       }
