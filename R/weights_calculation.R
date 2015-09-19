@@ -1,4 +1,3 @@
-library(R.matlab)
 
 ## THIS FUNCTION IS OBSOLETE!!!!
 #' @name Calculate weights for portfolio

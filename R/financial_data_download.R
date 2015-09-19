@@ -1,5 +1,3 @@
-#load quantmod package
-library(quantmod)
 
 ##Setup Constants
 #sources available: google, yahoo, FRED (Federal Reserve)

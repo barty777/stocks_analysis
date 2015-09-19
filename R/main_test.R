@@ -1,8 +1,5 @@
 ##This file is used for testing
 
-#load plugin
-library(quantmod)
-
 #Load companies
 companies <- c('AAPL','WMT','TSLA','GE')
 
