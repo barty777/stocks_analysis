@@ -13,9 +13,9 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
       meanRet <- numeric()
       var <- numeric()
 
-      for(i in 1:length(companies)){
+      for(i in 1:length(companiesTicker)){
 
-            companyPrices <- getHistoricPrices(company = companies[i],timeSpan = timespan)
+            companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
             companyReturns <- getReturns(companyPrices)
             temp <- getReturnsMeanVar(companyReturns)
 
@@ -24,12 +24,12 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
             var <- c(var,temp$Variance)
       }
       frame <- data.frame(meanRet,stdev,var)
-      rownames(frame) <- companies
+      rownames(frame) <- companiesTicker
       colnames(frame) <- c("Mean", "Stdev", "Variance")
 
 
       ##calcuating portfolio returns
-      returnsMat <- (frame$meanRet)
+      returnsMat <- (frame$Mean)
       portRet <- sum((weightsArray) * returnsMat)
       portRet
 }
@@ -45,7 +45,7 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
 #' to integer numbers.
 #' @return Mean of the returnes for given portfolio and weights
 #' @usage portfolioStdev(c("AAPL","WMT","GE"), 0.0063, 4))
-portfolioStdev <- function(companiesTicker,portfolioReturns,timespan ){
+portfolioStdev <- function(companiesTicker,portfolioReturns,timespan,weightsMatrixArray){
 
       for(i in 1:length(companies)){
 
@@ -66,8 +66,10 @@ portfolioStdev <- function(companiesTicker,portfolioReturns,timespan ){
 
 
       #get covariances-variances matrix
-      diffMatrix <- data.matrix(diffsFrame)
+      diffMatrix <- as.matrix(diffsFrame)
       covMatrix <- (t(diffMatrix) %*% diffMatrix) / nrow(diffMatrix)
 
+      stdev <- sqrt( (weightsMatrixArray %*% covMatrix) %*% t(t(weightsMatrixArray)))
+      stdev
 
 }
