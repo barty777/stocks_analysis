@@ -31,24 +31,35 @@ getReturns <- function(pricesHistoric) {
 #' @title Calculate beta, mean and variance
 #' @author Bartol Freškura
 #' @description Calculates beta coefficient for the given company when
-#' compared with given index. Also calculates mean and the variance of the returns
+#' compared with given index.
 #'  Argument data frames MUST have equal number of entries (rows).
 #' @param companyReturns Data frame containing returns for the company.
 #' @param indexReturns Data frame containing returns for the index.
-#' @return data frame with mean, variance and beta
-#' @usage getBetaMeanVar(TeslaReturns, S&P500_Returns)
+#' @return data frame with beta index
+#' @usage getBeta(TeslaReturns, S&P500_Returns)
 
-getBetaMeanVar <- function(companyReturns, indexReturns) {
+getBeta <- function(companyReturns, indexReturns) {
       covariance <- cov(companyReturns$Return,indexReturns$Return)
       varianceInd <- var(indexReturns$Return)
-      
+
       beta <- covariance/varianceInd
-      var <- var(companyReturns$Return)
-      mean <- mean(companyReturns$Return)
-      
-      frame <- data.frame(mean, var, beta)
-      colnames(frame) <- c('Mean', 'Variance', 'Beta')
+
+      frame <- data.frame(beta)
+      colnames(frame) <- c('Beta')
       frame
 }
 
 
+#' @title Calculate mean and variance
+#' @author Bartol Freškura
+#' @description Calculates mean and the variance of the returns
+#' @param companyReturns Data frame containing returns for the company.
+#' @return data frame with mean, variance and beta
+#' @usage getReturnsMeanVar(TeslaReturns)
+getReturnsMeanVar <- function(companyReturns){
+      var <- var(companyReturns$Return)
+      mean <- mean(companyReturns$Return)
+      frame <- data.frame(mean,var)
+      colnames(frame) <- c('Mean', 'Variance')
+      frame
+}
