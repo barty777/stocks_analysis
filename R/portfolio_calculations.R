@@ -13,18 +13,18 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
       meanRet <- numeric()
       var <- numeric()
 
-      for(i in 1:length(companiesTicker)){
+      for(i in 1:ncol(companiesTicker)){
 
-            companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
-            companyReturns <- getReturns(companyPrices)
-            temp <- getReturnsMeanVar(companyReturns)
+#             companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
+#             companyReturns <- getReturns(companyPrices)
+            temp <- getReturnsMeanVar(companiesTicker[,i])
 
             stdev <- c(stdev, temp$Stdev)
             meanRet <- c(meanRet, temp$Mean)
             var <- c(var,temp$Variance)
       }
       frame <- data.frame(meanRet,stdev,var)
-      rownames(frame) <- companiesTicker
+      # rownames(frame) <- companiesTicker
       colnames(frame) <- c("Mean", "Stdev", "Variance")
 
 
@@ -47,12 +47,13 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
 #' @usage portfolioStdev(c("AAPL","WMT","GE"), 0.0063, 4))
 portfolioStdev <- function(companiesTicker,portfolioReturns,timespan,weightsMatrixArray){
 
-      for(i in 1:length(companies)){
+      for(i in 1:ncol(companiesTicker)){
 
-            companyPrices <- getHistoricPrices(company = companies[i],timeSpan = timespan)
-            companyReturns <- getReturns(companyPrices)
+#
+#             companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
+#             companyReturns <- getReturns(companyPrices)
 
-            vecDiff <- companyReturns$Return-portfolioReturns
+            vecDiff <- companyReturn[,1]-portfolioReturns
 
             if(i == 1){
                   diffsFrame <- data.frame(vecDiff)
@@ -62,7 +63,7 @@ portfolioStdev <- function(companiesTicker,portfolioReturns,timespan,weightsMatr
             }
 
       }
-      colnames(diffsFrame) <- companies
+      colnames(diffsFrame) <- companiesTicker
 
 
       #get covariances-variances matrix

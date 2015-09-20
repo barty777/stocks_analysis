@@ -57,9 +57,9 @@ getBeta <- function(companyReturns, indexReturns) {
 #' @return data frame with mean, variance and beta
 #' @usage getReturnsMeanVar(TeslaReturns)
 getReturnsMeanVar <- function(companyReturns){
-      sd <- sd(companyReturns$Return)
-      mean <- mean(companyReturns$Return)
-      var <- var(companyReturns$Return)
+      sd <- sd(companyReturns)
+      mean <- mean(companyReturns)
+      var <- var(companyReturns)
 
       frame <- data.frame(mean,sd,var)
       colnames(frame) <- c('Mean', 'Stdev', "Variance")
