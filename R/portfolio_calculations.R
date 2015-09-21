@@ -4,19 +4,14 @@
 #' @description Calculates mean return in given portfolio of stocks
 #' @param companiesTicker Array of tickers
 #' @param weightsArray Array of weights
-#' @param timespan Time interval in years. timeSpan of 2 means that data. Rounds
-#' to integer numbers.
 #' @return Mean of the returnes for given portfolio and weights
-#' @usage portfolioAvgReturn(c("AAPL","WMT","GE"), c(0.2,0.5,0.3),4))
-portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
+#' @usage portfolioAvgReturn(c("AAPL","WMT","GE"), c(0.2,0.5,0.3), 4))
+portfolioAvgReturn <- function(companiesTicker, weightsArray){
       stdev <- numeric()
       meanRet <- numeric()
       var <- numeric()
 
       for(i in 1:ncol(companiesTicker)){
-
-#             companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
-#             companyReturns <- getReturns(companyPrices)
             temp <- getReturnsMeanVar(companiesTicker[,i])
 
             stdev <- c(stdev, temp$Stdev)
@@ -41,19 +36,14 @@ portfolioAvgReturn <- function(companiesTicker, weightsArray, timespan){
 #' @description Calculates Standard deviation in given portfolio of stocks
 #' @param companiesTicker Array of tickers
 #' @param portfolioReturns Average return for the given portfolio
-#' @param timespan Time interval in years. timeSpan of 2 means that data. Rounds
-#' to integer numbers.
+#' @param weightsArray Array of weights
 #' @return Mean of the returnes for given portfolio and weights
-#' @usage portfolioStdev(c("AAPL","WMT","GE"), 0.0063, 4))
-portfolioStdev <- function(companiesTicker,portfolioReturns,timespan,weightsMatrixArray){
+#' @usage portfolioStdev(c("AAPL","WMT","GE"), 0.0063, c(0.2,0.5,0.3)))
+portfolioStdev <- function(companiesTicker,portfolioReturns, weightsArray){
 
       for(i in 1:ncol(companiesTicker)){
 
-#
-#             companyPrices <- getHistoricPrices(company = companiesTicker[i],timeSpan = timespan)
-#             companyReturns <- getReturns(companyPrices)
-
-            vecDiff <- companyReturn[,1]-portfolioReturns
+            vecDiff <- companiesTicker[,1]-portfolioReturns
 
             if(i == 1){
                   diffsFrame <- data.frame(vecDiff)

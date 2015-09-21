@@ -53,7 +53,7 @@ getBeta <- function(companyReturns, indexReturns) {
 #' @title Calculate mean and variance
 #' @author Bartol Freškura
 #' @description Calculates mean and the variance of the returns
-#' @param companyReturns Data frame containing returns for the company.
+#' @param companyReturns vector containing returns for the company.
 #' @return data frame with mean, variance and beta
 #' @usage getReturnsMeanVar(TeslaReturns)
 getReturnsMeanVar <- function(companyReturns){
