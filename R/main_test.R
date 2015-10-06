@@ -4,15 +4,15 @@
 path <- paste(getwd(),"/Matlab",sep = "")
 
 ##3 stocks
-weights <- loadMatlabWeights("0020_5",path)
+weights <- loadMatlabWeights("/0020_2",path)
 weightsMatrix <- as.matrix(weights)
 
 #Load companies
 # companies <- c('AAPL','GE','CLD')
-# companies <- c('BAC','ATML')
- companies <- c("ICUI","REGN","MMSI","ABMD","IT")
- #companies <- c("ICUI","REGN","MMSI")
- 
+companies <- c('AAPL','IBM')
+#companies <- c("ICUI","REGN","MMSI","ABMD","IT")
+#companies <- c("ICUI","REGN","MMSI")
+
 #Indexes tickers: S&P 500, Russell 3000, Russell 2000, Dow Jones Industrial Average
 # indexTickerYahoo = c('^GSPC', '^RUA', '^RUT', '^DJI')
 # indexPrices <- getHistoricPrices(company = indexTickerYahoo[1],timeSpan = 4)
@@ -20,10 +20,10 @@ weightsMatrix <- as.matrix(weights)
 
 
 
- ##Load company returns
+##Load company returns
 for(i in 1:length(companies)){
 
-      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 6)
+      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 0)
       companyReturns <- getReturns(companyPrices, frequency = 'M')
       if(i==1){
             returnsDataFram <- data.frame(companyReturns$Return)
@@ -38,29 +38,30 @@ colnames(returnsDataFram) <- companies
 
 
 
-# ##calculate single thread
+##calculate single thread
 # means <- numeric()
 # stdevs <- numeric()
 # we <- numeric()
 # size <- nrow(weights)
-# for(i in 1:length(weights)){
-# 
+# for(i in 1:1){
+#
 #       ##Print progress
 #       if(i %% 50 == 0){
 #             cat(paste("Progress:", i, "/", size, sep = " "))
 #             cat("\n")
 #       }
-# 
-#       returnsMean <- portfolioAvgReturn(companiesTicker = returnsDataFram,weightsArray = weights[i,])
-#       returnsMeanArray <- portfolioAvgReturnArray(companiesTicker = returnsDataFram,weightsArray = weights[i,])
-#       returnsStdev <- portfolioStdev(companiesTicker = returnsDataFram, portfolioReturns = returnsMeanArray, weightsArray =  weightsMatrix[i,])
-#       
-#       
-# 
+#
+#       returnsMean <- portfolioAvgReturn(companiesReturns = returnsDataFram, weightsArray = weights[i,])
+#       returnsMeanArray <- portfolioAvgReturnArray(companiesReturns = returnsDataFram)
+#       returnsStdev <- portfolioStdev(companiesReturns = returnsDataFram, portfolioReturns = returnsMeanArray, weightsArray =  weightsMatrix[i,])
+#
+#
+#       ratio <- returnsMean/returnsStdev
+#       browser()
 #       means <- c(means,returnsMean)
 #       stdevs <- c(stdevs,returnsStdev)
-#       
-#     
+#
+#
 # }
 # frameMean <- data.frame(means, stdevs)
 
@@ -78,12 +79,12 @@ weightsArray <- numeric()
 size <- nrow(weights)
 strt<-Sys.time()
 cat("Calculation started. This make take a while...")
-finalResult <- foreach(i=1:size ) %dopar% {
+
+returnsMeanArray <- portfolioAvgReturnArray(companiesReturns = returnsDataFram)
+finalResult <- foreach(i=1:size) %dopar% {
 
       returnsMean <- portfolioAvgReturn(companiesReturns  = returnsDataFram,weightsArray = weights[i,])
-      returnsMeanArray <- portfolioAvgReturnArray(companiesReturns = returnsDataFram,weightsArray = weights[i,])
       returnsStdev <- portfolioStdev(companiesReturns = returnsDataFram, portfolioReturns = returnsMeanArray, weightsArray =  weightsMatrix[i,])
-
       ratio <- returnsMean/returnsStdev
       temp <- c(returnsMean,returnsStdev,ratio, weightsMatrix[i,])
 

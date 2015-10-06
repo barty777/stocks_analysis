@@ -1,14 +1,14 @@
 
-#' @name Calculate Portoflio Return
+#' @name Calculate Portoflio Weighted Return
 #' @author Bartol Freškura
-#' @description Calculates mean return in given portfolio of stocks
+#' @description Calculates weighted return in given portfolio of stocks
 #' @param companiesReturns Data Frame of returns for every stock
 #' @param weightsArray Array of weights
 #' @return Mean of the returnes for given portfolio and weights
 #' @usage portfolioAvgReturn(frameReturns, c(0.2,0.5,0.3)))
-#' 
+#'
 portfolioAvgReturn <- function(companiesReturns, weightsArray){
-     meanRet <- numeric()
+      meanRet <- numeric()
 
       for(i in 1:ncol(companiesReturns)){
             temp <- mean(companiesReturns[,i])
@@ -22,17 +22,15 @@ portfolioAvgReturn <- function(companiesReturns, weightsArray){
 
 
 
-#' @name Calculate  Portoflio Return Array
+#' @name Calculate Portoflio Average Return Array
 #' @author Bartol Freškura
-#' @description Calculates array of mean returns for every stock in portfolio
+#' @description Calculates array of average returns for every stock in portfolio
 #' @param companiesReturns Data Frame of returns for every stock
-#' @param weightsArray Array of weights
 #' @return Array of means for every stock in portfolio
 #' @usage portfolioAvgReturn(frameReturns, c(0.2,0.5,0.3)))
-#' 
-portfolioAvgReturnArray <- function(companiesReturns, weightsArray){
-      meanRet <- numeric()
-      
+#'
+portfolioAvgReturnArray <- function(companiesReturns){
+
       for(i in 1:ncol(companiesReturns)){
             temp <- mean(companiesReturns[,i])
             meanRet <- c(meanRet, temp)
@@ -57,9 +55,9 @@ portfolioStdev <- function(companiesReturns,portfolioReturns, weightsArray){
             vecDiff <- companiesReturns[,i]-portfolioReturns[i]
 
             if(i == 1){
-                  
+
                   diffsFrame <- data.frame(vecDiff)
-                  
+
             }
             else{
                   diffsFrame <- data.frame(diffsFrame,vecDiff)
@@ -70,7 +68,6 @@ portfolioStdev <- function(companiesReturns,portfolioReturns, weightsArray){
       #get covariances-variances matrix
       diffMatrix <- as.matrix(diffsFrame)
       covMatrix <- (t(diffMatrix) %*% diffMatrix) / nrow(diffMatrix)
-
       stdev <- sqrt( (weightsArray%*%covMatrix)%*%t(t(weightsArray)))
       stdev
 
