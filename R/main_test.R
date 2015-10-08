@@ -4,13 +4,13 @@
 path <- paste(getwd(),"/Matlab",sep = "")
 
 ##3 stocks
-weights <- loadMatlabWeights("/0020_2",path)
+weights <- loadMatlabWeights("/0020_5",path)
 weightsMatrix <- as.matrix(weights)
 
 #Load companies
-# companies <- c('AAPL','GE','CLD')
-companies <- c('AAPL','IBM')
-#companies <- c("ICUI","REGN","MMSI","ABMD","IT")
+#companies <- c('JPM','MMM','PG')
+#companies <- c('AAPL','IBM')
+companies <- c("ICUI","REGN","MMSI","ABMD","IT")
 #companies <- c("ICUI","REGN","MMSI")
 
 #Indexes tickers: S&P 500, Russell 3000, Russell 2000, Dow Jones Industrial Average
@@ -23,7 +23,7 @@ companies <- c('AAPL','IBM')
 ##Load company returns
 for(i in 1:length(companies)){
 
-      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 0)
+      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 7)
       companyReturns <- getReturns(companyPrices, frequency = 'M')
       if(i==1){
             returnsDataFram <- data.frame(companyReturns$Return)
@@ -104,4 +104,11 @@ for(i in 1:size){
 }
 
 finalFrame <- finalResult[[id]]
-finalFrame
+format <- formatReturnResult(companies = companies, finalFrame)
+format
+
+#Confidence interval
+error <- qnorm(0.975)*format$Standard.Deviation/sqrt(size)
+left <- format$Average.Return-error
+right <- format$Average.Return+error
+cat("95% conidence interval[", left," - ", right,"]")

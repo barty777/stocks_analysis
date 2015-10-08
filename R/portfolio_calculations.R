@@ -68,3 +68,26 @@ portfolioStdev <- function(companiesReturns, portfolioReturns, weightsArray){
       stdev <- sqrt( (weightsArray%*%covMatrix)%*%t(t(weightsArray)))
       stdev
 }
+
+
+#' @name Format the calculation result
+#' @author Bartol Freškura
+#' @description Formats the final result for displaying clearer results
+#' Average return, standard deviation and weights are returned in percentages
+#' @param companies Array with companies tickers
+#' @param calculatedResult Array containing the result in a following format: [avgReturn, stdev,
+#' avgReturn/stdev, weights...]
+#' @return Formated Result
+#' @example formatReturnsResult(c("AAPL", "MMM"), result)
+formatReturnResult <- function(companies, calculatedResult){
+      columnNames <- c("Average.Return", "Standard.Deviation", "AvgReturn/Stdev", companies)
+      frame <- data.frame(calculatedResult[1]*100,calculatedResult[2]*100, calculatedResult[3])
+
+      for(i in 1:length(companies)){
+            frame <- cbind(frame,calculatedResult[i+3]*100)
+      }
+
+      colnames(frame) <- columnNames
+      frame
+
+}
