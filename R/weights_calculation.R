@@ -1,5 +1,6 @@
 
 ## THIS FUNCTION IS OBSOLETE!!!!
+
 #' @name Calculate weights for portfolio
 #' @author Bartol Freškura
 #' @description Returns data frame containing all combinations of weights where
@@ -29,6 +30,7 @@
 #       }
 # }
 
+## THIS FUNCTION IS OBSOLETE!!!!
 
 
 
