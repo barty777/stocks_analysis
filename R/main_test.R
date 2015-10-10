@@ -4,11 +4,11 @@
 path <- paste(getwd(),"/Matlab",sep = "")
 
 ##3 stocks
-weights <- loadMatlabWeights("/0020_5",path)
+weights <- loadMatlabWeights("/0020_3",path)
 weightsMatrix <- as.matrix(weights)
 
 #Load companies
-#companies <- c('JPM','MMM','PG')
+companies <- c('JPM','MMM','PG')
 #companies <- c('AAPL','IBM')
 companies <- c("ICUI","REGN","MMSI","ABMD","IT")
 #companies <- c("ICUI","REGN","MMSI")

@@ -88,10 +88,10 @@ getHistoricPrices <- function(company,srce = 'yahoo', timeSpan=1) {
             lowPrice <- c(lowPrice, rawConverted[i,3])
             closePrice <- c(closePrice, rawConverted[i,4])
             volume <- c(volume, rawConverted[i,5])
-           # adjusted <- c(adjusted, rawConverted[i,6])
+            adjusted <- c(adjusted, rawConverted[i,6])
       }
-      colNames <- c('Date', 'Open','High', 'Low','Close', 'Volume')
-      data <- data.frame(index(x),openPrice,highPrice,lowPrice,closePrice,volume)
+      colNames <- c('Date', 'Open','High', 'Low','Close', 'Volume', 'Adjusted.Close')
+      data <- data.frame(index(x),openPrice,highPrice,lowPrice,closePrice,volume, adjusted)
       colnames(data) <- colNames
 
       boolVectorDate <- data[,1]>=paste(yearFrom,"-01-01",sep = '')

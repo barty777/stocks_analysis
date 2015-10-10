@@ -3,7 +3,7 @@
 #' @description Function returns data frame containing returns from past
 #' on the daily, weekly or monthly basis. Returns are NOT in PERCENTAGES!!!
 #' @param pricesHistoric Data frame with historic prices. Data should be in
-#' form of Date, Open High, Low, Close, Volume
+#' form of Date, Open High, Low, Close, Volume, Adjusted.Close
 #' @return data frame containing date and return.
 
 getReturns <- function(pricesHistoric, frequency="M") {
@@ -13,7 +13,7 @@ getReturns <- function(pricesHistoric, frequency="M") {
       if(frequency=='D'){
 
             for(i in 2:(nrow(pricesHistoric)-1)) {
-                  change <- as.numeric(as.character((pricesHistoric$Close[i+1]/pricesHistoric$Close[i]) - 1))
+                  change <- as.numeric(as.character((pricesHistoric$Adjusted.Close[i+1]/pricesHistoric$Adjusted.Close[i]) - 1))
                   returns <- c(returns, change)
             }
             #Remove first and last dates
@@ -31,7 +31,7 @@ getReturns <- function(pricesHistoric, frequency="M") {
             for(i in seq(from=1, to=nrow(pricesHistoric), by=5)) {
                   #check if there are sufficient number of entries
                   if((i+5) <= nrow(pricesHistoric)){
-                        change <- as.numeric(as.character((pricesHistoric$Close[i+5]/pricesHistoric$Close[i]) - 1))
+                        change <- as.numeric(as.character((pricesHistoric$Adjusted.Close[i+5]/pricesHistoric$Adjusted.Close[i]) - 1))
                         returns <- c(returns, change)
                   }
             }
@@ -45,7 +45,7 @@ getReturns <- function(pricesHistoric, frequency="M") {
             for(i in seq(from=1, to=nrow(pricesHistoric), by=22)) {
                   #check if there are sufficient number of entries
                   if((i+22) <= nrow(pricesHistoric)){
-                        change <- as.numeric(as.character((pricesHistoric$Close[i+22]/pricesHistoric$Close[i]) - 1))
+                        change <- as.numeric(as.character((pricesHistoric$Adjusted.Close[i+22]/pricesHistoric$Adjusted.Close[i]) - 1))
                         returns <- c(returns, change)
                   }
             }
