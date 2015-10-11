@@ -10,7 +10,8 @@ weightsMatrix <- as.matrix(weights)
 #Load companies
 companies <- c('JPM','MMM','PG')
 #companies <- c('AAPL','IBM')
-companies <- c("ICUI","REGN","MMSI","ABMD","IT")
+companies <- c("ICUI","REGN","MMSI","ABMD","IT", "IBM", "AAPL", "CLD","NVDA","EMC","BAC","F",
+               "ZINC", "SKBI")
 #companies <- c("ICUI","REGN","MMSI")
 
 #Indexes tickers: S&P 500, Russell 3000, Russell 2000, Dow Jones Industrial Average
@@ -23,8 +24,8 @@ companies <- c("ICUI","REGN","MMSI","ABMD","IT")
 ##Load company returns
 for(i in 1:length(companies)){
 
-      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 7)
-      companyReturns <- getReturns(companyPrices, frequency = 'M')
+      companyPrices <- getHistoricPrices(company = companies[i],timeSpan = 1)
+      companyReturns <- getReturns(companyPrices, frequency = 'D')
       if(i==1){
             returnsDataFram <- data.frame(companyReturns$Return)
       }
@@ -81,6 +82,8 @@ strt<-Sys.time()
 cat("Calculation started. This make take a while...")
 
 returnsMeanArray <- portfolioAvgReturnArray(companiesReturns = returnsDataFram)
+
+#Calculate for every possible weight combination
 finalResult <- foreach(i=1:size) %dopar% {
 
       returnsMean <- portfolioAvgReturn(companiesReturns  = returnsDataFram,weightsArray = weights[i,])
@@ -93,6 +96,7 @@ stopCluster(cl)
 print(Sys.time()-strt)
 
 
+#Find combination with     the maximum avgReturn/Stdev ratio
 cat("Filtering Results...")
 max <- finalResult[[1]][3]
 id <- 1
@@ -102,7 +106,6 @@ for(i in 1:size){
             id <- i;
       }
 }
-
 finalFrame <- finalResult[[id]]
 format <- formatReturnResult(companies = companies, finalFrame)
 format
@@ -112,3 +115,7 @@ error <- qnorm(0.975)*format$Standard.Deviation/sqrt(size)
 left <- format$Average.Return-error
 right <- format$Average.Return+error
 cat("95% conidence interval[", left," - ", right,"]")
+
+
+#Plotting
+plotReturnStdev(returnsDataFram, companies = companies)

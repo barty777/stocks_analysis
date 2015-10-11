@@ -9,3 +9,6 @@ library(quantmod)
 ##MULTI CORE PROCESSING RELATED LIBRARIES
 library(foreach)
 library(doParallel)
+
+##PLOTTING
+library(ggplot2)
