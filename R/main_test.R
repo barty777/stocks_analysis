@@ -76,7 +76,6 @@ registerDoParallel(cl)
 
 returnsMean <- numeric()
 returnsStdev <- numeric()
-weightsArray <- numeric()
 size <- nrow(weights)
 strt<-Sys.time()
 cat("Calculation started. This make take a while...")
