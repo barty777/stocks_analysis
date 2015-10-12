@@ -63,7 +63,7 @@ getCashFlow <- function(company,periodFreq = 'A') {
 #'@description
 #'Returns dataframe with this columns: Open Price, High Price, Low Price, Close
 #' Price, Volume, Adjusted
-#'@param company: Company ticker
+#'@param company: Company ticker. DO NOT ENTER MULTIPLE TICKERS
 #'@param srce: website source
 #'@param timeSpan Time interval in years. timeSpan of 2 means that data. Rounds
 #' to integer numbers.
